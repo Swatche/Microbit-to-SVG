@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-ca">
+  <head>
+    <!-- Specify Character Encoding -->
+    <meta charset="UTF-8" />
+    <!-- Controls Layout on Browsers -->
+    <meta name="viewport" content="width=device-width" minimum-scale="1.0" />
+    <!-- Who are you? -->
+    <meta name="author" content="Sammy Mak" />
+    <!-- Attach Stylesheet -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <!-- Name Your Page -->
+    <title>Micro:bit to SVG Template</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Micro:bit to SVG</h1>
+
+      <!-- ! 1.0 USE EMBEDDED SVG OBJECT -->
+      <section id="sceneContainer">
+        <div id="sceneWrapper">
+          <object class="scene" id="scene1SVG" data="img/scene1.svg" type="image/svg+xml"></object>
+          <object class="scene" id="scene2SVG" data="img/scene2.svg" type="image/svg+xml"></object>
+          <object class="scene" id="scene3SVG" data="img/scene3.svg" type="image/svg+xml"></object>
+        </div>
+      </section>
+
+      <section id="UIContainer">
+        <!-- ! 1.1 Delete the onClick function -->
+        <button id="searchButton">Search Device</button>
+
+        <fieldset id="buttonContainer">
+          <h2>Buttons:</h2>
+          <ul class="property">
+            <li>Button A: <span id="buttonA" class="value"></span></li>
+            <li>Button B: <span id="buttonB" class="value"></span></li>
+          </ul>
+        </fieldset>
+
+        <fieldset>
+          <h2>Accelerometer:</h2>
+          <ul>
+            <li>X: <span id="accX" class="value"></span></li>
+            <li>Y: <span id="accY" class="value"></span></li>
+            <li>Z: <span id="accZ" class="value"></span></li>
+            <li>Temperature <span id="temperature" class="value"></span></li>
+          </ul>
+        </fieldset>
+    
+      </section>
+    </main>
+
+    <!-- *  GSAP on server  -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script> -->
+
+    <!-- * Add Micro:bit library to our page -->
+    <script type="text/javascript" src="js/vendor/microBit.js"></script>
+    
+    <!-- * Local GSAP3  -->
+    <script type="text/javascript" src="js/vendor/gsap.min.js"></script>
+
+    <!-- * Add your JS Script -->
+    <script type="text/javascript" src="js/script.js"></script>
+  </body>
+</html>
