@@ -11,6 +11,7 @@ window.onload = function() {
     let scene1WeightOn = scene1.getElementById("weight-on")
     let scene1Want = scene1.getElementById("want")
     let scene1Weightless = scene1.getElementById("weightless")
+    let scene1AtoContinue1 = scene1.getElementById("press-A-to-continue-1")
 
     //! scene2
     let scene2 = document.getElementById('scene2SVG').contentDocument
@@ -35,6 +36,31 @@ window.onload = function() {
 
     let scene3Wrapper = scene3.getElementById("scene3Wrapper")
     let scene3Rocket = scene3.getElementById("scene3-rocket")
+    let star1 = scene3.getElementById("star-1")
+    let star2 = scene3.getElementById("star-2")
+    let star3 = scene3.getElementById("star-3")
+    let star4 = scene3.getElementById("star-4")
+    let star5 = scene3.getElementById("star-5")
+    let star6 = scene3.getElementById("star-6")
+    let star7 = scene3.getElementById("star-7")
+    let star8 = scene3.getElementById("star-8")
+    let star9 = scene3.getElementById("star-9")
+    let star10 = scene3.getElementById("star-10")
+    let star11 = scene3.getElementById("star-11")
+    let star12 = scene3.getElementById("star-12")
+    let star13 = scene3.getElementById("star-13")
+    let star14 = scene3.getElementById("star-14")
+    let star15 = scene3.getElementById("star-15")
+    let redPlanet = scene3.getElementById("red")
+    let bluePlanet = scene3.getElementById("blue")
+    let yellowPlanet = scene3.getElementById("yellow")
+
+    //* star containers
+    let starg1 = [star3, star6, star13]
+    let starg2 = [star2, star11, star12]
+    let starg3 = [star5, star8, star14]
+    let starg4 = [star4, star7, star9]
+    let starg5 = [star1, star10, star15]
 
     //! scene item containers
     let scene1Items = [stickNeutral, scene1AToContinue, scene1moon, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
@@ -232,6 +258,7 @@ window.onload = function() {
                 gsap.to([cloud1, cloud2, cloud3, cloud4, cloud5, scene2Text], {
                     opacity: 0
                 })
+                writeText("BLAST OFF")
                 let rocketLaunch = gsap.timeline({duration: 1})
                 rocketLaunch.to(scene2Fire, {
                     opacity: 1,
@@ -254,6 +281,10 @@ window.onload = function() {
             default:
                 break;
         }
+    }
+
+    function writeText (text){
+        microBit.writeMatrixText(text);
     }
 
     function scene1Do(){
@@ -295,8 +326,8 @@ window.onload = function() {
             yoyo: true,
             repeat: -1
         })
-        scene1Start.to(scene1AToContinue, {
-            opacity: 1,
+        scene1Start.to(scene1AtoContinue1, {
+            opacity: 1
         })
     }
 
@@ -312,19 +343,19 @@ window.onload = function() {
         })
         scene2Start.to(rocketFloor, {
             opacity: 1,
-            duration: 2
+            duration: 1
         })
         scene2Start.to(rocketStand, {
             opacity: 1,
-            duration: 2
+            duration: 1
         })
         scene2Start.to(rocketRod, {
             opacity: 1,
-            duration: 2
+            duration: 1
         })
         scene2Start.to(scene2Rocket, {
             opacity: 1,
-            duration: 2
+            duration: 1
         })
         scene2Start.to(scene2Text, {
             opacity: 1
@@ -340,6 +371,30 @@ window.onload = function() {
             opacity: 1,
             delay: 2,
             duration: 2
+        })
+        scene3Start.to(starg1, {
+            opacity:1,
+            duration:0.8
+        })
+        scene3Start.to([starg2, redPlanet], {
+            opacity:1,
+            duration:0.8
+        })
+        scene3Start.to([starg3, bluePlanet], {
+            opacity:1,
+            duration:0.8
+        })
+        scene3Start.to(starg4, {
+            opacity:1,
+            duration:0.8
+        })
+        scene3Start.to([starg5, yellowPlanet], {
+            opacity:1,
+            duration:0.8
+        })
+        scene3Start.to(scene3Rocket, {
+            opacity: 1,
+            duration: 0.8
         })
     }
 
