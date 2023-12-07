@@ -369,7 +369,7 @@ window.onload = function() {
         })
         scene3Start.to(scene3Wrapper, {
             opacity: 1,
-            delay: 2,
+            delay: 1.3,
             duration: 2
         })
         scene3Start.to(starg1, {
