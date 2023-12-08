@@ -1,5 +1,6 @@
 // ******************  3.0 ADD WINDOW ONLOAD TO ALLOW EMBEDDED SVG TO TARGET PROPERLY
 window.onload = function() {
+    let accelField = document.getElementById("accel")
     //! scene1
     let scene1 = document.getElementById('scene1SVG').contentDocument
 
@@ -200,7 +201,7 @@ window.onload = function() {
         return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
     }
 
-    //!!!!!!!! SCENE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!! DO THE SCENE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     gsap.set(scene1moon,{
         y: -550
     })
@@ -237,6 +238,7 @@ window.onload = function() {
         switch(buttonACurrentCount){
             case 1:
                 scene1Do();
+                // accelField.classList.add("block")
                 break;
             case 2:
                 scene2Do();
@@ -254,7 +256,7 @@ window.onload = function() {
         buttonBCurrentCount++;
         console.log(buttonBCurrentCount);
 
-        if (buttonBCurrentCount === 21) {
+        if (buttonBCurrentCount === 35) {
             return;
         }
 
