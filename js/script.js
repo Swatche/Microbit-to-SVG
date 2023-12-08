@@ -35,7 +35,9 @@ window.onload = function() {
     let scene3 = document.getElementById('scene3SVG').contentDocument
 
     let scene3Wrapper = scene3.getElementById("scene3Wrapper")
+    let scene3Bg = scene3.getElementById("scene3Bg")
     let scene3Rocket = scene3.getElementById("scene3-rocket")
+    let scene3Moon = scene3.getElementById("scene3-moon")
     let star1 = scene3.getElementById("star-1")
     let star2 = scene3.getElementById("star-2")
     let star3 = scene3.getElementById("star-3")
@@ -54,6 +56,8 @@ window.onload = function() {
     let redPlanet = scene3.getElementById("red")
     let bluePlanet = scene3.getElementById("blue")
     let yellowPlanet = scene3.getElementById("yellow")
+    let moonCollider = scene3.getElementById("collide-box")
+    let rocketCollider = scene3.getElementById("rocket-collider")
 
     //* star containers
     let starg1 = [star3, star6, star13]
@@ -62,9 +66,30 @@ window.onload = function() {
     let starg4 = [star4, star7, star9]
     let starg5 = [star1, star10, star15]
 
+    //! scene 4
+    let scene4 = document.getElementById('scene4SVG').contentDocument
+
+    let scene4Wrapper = scene4.getElementById("scene4Wrapper")
+    let moonSurface = scene4.getElementById("moon-surface")
+    let scene4Rocket = scene4.getElementById("scene4-rocket")
+    let astronaut = scene4.getElementById("astronaut")
+    let umbilicalCord = scene4.getElementById("umbilical-cord")
+    let earth = scene4.getElementById("earth")
+    let star4_1 = scene4.getElementById("star4-1")
+    let star4_2 = scene4.getElementById("star4-2")
+    let star4_3 = scene4.getElementById("star4-3")
+    let star4_4 = scene4.getElementById("star4-4")
+    let star4_5 = scene4.getElementById("star4-5")
+    let star4_6 = scene4.getElementById("star4-6")
+    let star4_7 = scene4.getElementById("star4-7")
+    let star4_8 = scene4.getElementById("star4-8")
+    let star4_9 = scene4.getElementById("star4-9")
+
     //! scene item containers
     let scene1Items = [stickNeutral, scene1AToContinue, scene1moon, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
     let scene2Items = [cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
+    let scene3Items = [scene3Rocket, scene3Moon, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet]
+    let scene4Items = [moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
 
     // *** 1.1 Delcare new micro:bit object ***
     let microBit = new uBit();
@@ -72,6 +97,22 @@ window.onload = function() {
     // ** 3.1 GET SEARCH BUTTON AND ADD EVENT LISTENER ****************
     let searchBtn = document.getElementById('searchButton');
 
+    // ! collider logic
+    let currentCollide = false
+    let prevCollide = currentCollide 
+    
+    //overlap calc
+    function intersect (r1,r2){
+        r1 = r1.getBoundingClientRect()
+        r2 = r2.getBoundingClientRect()
+
+        //check if boxes overlap
+        return !(r2.left > r1.right ||
+                r2.right < r1.left ||
+                r2.top > r1.bottom ||
+                r2.bottom < r1.top)
+    }
+    
     // ! set up viewbox dimension variables
     let svgWidth = 1100;
     let svgHeight = 600;
@@ -80,7 +121,8 @@ window.onload = function() {
     let rocketWidth = 196.3743
     let rocketHeight = 303.1638
 
-    gsap.set([scene1Weightless, scene2Fire, scene2Rocket, scene3Rocket], {
+    gsap.set([scene1Weightless, scene2Fire, scene2Rocket, 
+            scene3Rocket, moonCollider, rocketCollider, scene3Items], {
         transformOrigin: "center center"
     })
 
@@ -137,6 +179,14 @@ window.onload = function() {
             ease: Power3.easeOut
         });
 
+        currentCollide = intersect (rocketCollider, moonCollider)
+        
+        if (currentCollide === true && prevCollide === false){
+            scene4Do()
+        }
+        
+        prevCollide = currentCollide
+
     });
 
     // ! create scaling function: takes input variable, maps the min and max input values to a new range
@@ -150,11 +200,6 @@ window.onload = function() {
         return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
     }
 
-    // gsap.set(scene3Rocket,{
-    //     x: -964.1872,
-    //     y: -563.1428
-    // })
-
     //!!!!!!!! SCENE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     gsap.set(scene1moon,{
         y: -550
@@ -162,10 +207,16 @@ window.onload = function() {
     gsap.set(scene1WeightOn,{
         x: 770
     })
-
-    gsap.set([scene2Wrapper, scene3Wrapper], {
+    gsap.set([astronaut, umbilicalCord], {
+        y: 150,
+    })
+    gsap.set([scene4Wrapper, scene2Wrapper, scene3Wrapper], {
         opacity: 0
     })
+
+    // gsap.set([scene3Items], {
+    //     opacity: 1
+    // })
 
     // ** 1.5 Only calls function once when Button A is pressed. 
     microBit.setButtonACallback(function() {
@@ -217,7 +268,7 @@ window.onload = function() {
                     duration: 1.5
                 })
                 break;
-            case 6:
+            case 8:
                 gsap.to(cloud3, {
                     autoAlpha: 1,
                     repeat: -1,
@@ -225,7 +276,7 @@ window.onload = function() {
                     duration: 1.5
                 })
                 break;
-            case 9:
+            case 14:
                 gsap.to(cloud5, {
                     autoAlpha: 1,
                     repeat: -1,
@@ -233,7 +284,7 @@ window.onload = function() {
                     duration: 1.5
                 })
                 break;
-            case 12:
+            case 21:
                 gsap.to(cloud2, {
                     autoAlpha: 1,
                     repeat: -1,
@@ -241,7 +292,7 @@ window.onload = function() {
                     duration: 1.5
                 })
                 break;
-            case 15:
+            case 28:
                 gsap.to(cloud4, {
                     autoAlpha: 1,
                     repeat: -1,
@@ -249,7 +300,7 @@ window.onload = function() {
                     duration: 1.5
                 })
                 break;
-            case 20:
+            case 35:
                 gsap.killTweensOf(cloud1);
                 gsap.killTweensOf(cloud3);
                 gsap.killTweensOf(cloud5);
@@ -363,6 +414,131 @@ window.onload = function() {
     }
 
     function scene3Do(){
+        starg1.forEach(star => {
+            gsap.to(star, {
+                rotate: 360,
+                repeat: -1,
+                duration: 3,
+                ease: "linear"
+            })
+        })
+        starg2.forEach(star => {
+            let starg2Move = gsap.timeline({duration: 0.5, repeat: -1, yoyo: true, ease: "linear"})
+            starg2Move.to(star, {
+                translateY: 542,
+                translateX: -789,
+                duration: 2
+            })
+            starg2Move.to(star, {
+                translateY: 256,
+                translateX: -431,
+                duration: 2
+            })
+            starg2Move.to(star, {
+                translateY: -672,
+                translateX: 915,
+                duration: 2
+            })
+            starg2Move.to(star, {
+                translateY: 78,
+                translateX: -849,
+                duration: 2
+            })
+        })
+        starg3.forEach(star => {
+            let starg3Move = gsap.timeline({duration: 0.5, repeat: -1, yoyo: true, ease: "linear"})
+            starg3Move.to(star, {
+                translateY: -50,
+                translateX: -100,
+                duration: 2
+            })
+            starg3Move.to(star, {
+                translateX: -100,
+                translateY: -50,
+                duration: 2
+            })
+            starg3Move.to(star, {
+                translateY: -200,
+                translateX: 500,
+                duration: 2
+            })
+            starg3Move.to(star, {
+                translateX: -500,
+                translateY: 200,
+                duration: 2
+            })
+        })
+        starg5.forEach(star => {
+            let starg5Move = gsap.timeline({duration: 0.5, repeat: -1, yoyo: true, ease: "linear"})
+            starg5Move.to(star, {
+                translateY: 1000,
+                translateX:1000,
+                duration: 2
+            })
+            starg5Move.to(star, {
+                translateY: -500,
+                translateX: -200,
+                duration: 2
+            })
+            starg5Move.to(star, {
+                translateY: 1500,
+                translateX: -600,
+                duration: 2
+            })
+            starg5Move.to(star, {
+                translateY: 1500,
+                translateX: -600,
+                duration: 2
+            })
+        })
+        gsap.to(yellowPlanet, {
+            rotate: 180,
+            repeat: -1,
+            ease: "linear",
+            duration: 4
+        })
+        let blueMove = gsap.timeline({repeat: -1, yoyo: true, ease: "linear"})
+        blueMove.to(bluePlanet, {
+            translateX: 12,
+            translateY: -28,
+            duration: 2
+        })
+        blueMove.to(bluePlanet, {
+            translateX: 45,
+            translateY: -5,
+            duration: 2
+        })
+        blueMove.to(bluePlanet, {
+            translateX: 33,
+            translateY: -48,
+            duration: 2
+        })
+        blueMove.to(bluePlanet, {
+            translateX: 20,
+            translateY: -37,
+            duration: 2
+        })
+        let redMove = gsap.timeline({repeat: -1, yoyo: true, ease: "linear"})
+        redMove.to(redPlanet, {
+            translateX: -14,
+            translateY: 30,
+            duration: 2
+        })
+        redMove.to(redPlanet, {
+            translateX: -22,
+            translateY: 7,
+            duration: 2
+        })
+        redMove.to(redPlanet, {
+            translateX: 18,
+            translateY: -40,
+            duration: 2
+        })
+        redMove.to(redPlanet, {
+            translateX: 27,
+            translateY: -3,
+            duration: 2
+        })
         let scene3Start = gsap.timeline({duration: 1})
         scene3Start.to(scene2Wrapper, {
             opacity: 0,
@@ -392,10 +568,31 @@ window.onload = function() {
             opacity:1,
             duration:0.8
         })
-        scene3Start.to(scene3Rocket, {
+        scene3Start.to([scene3Rocket, scene3Moon], {
             opacity: 1,
             duration: 0.8
         })
+    }
+
+    function scene4Do(){
+        gsap.to([scene1Wrapper, scene2Wrapper, scene2Bg, scene3Wrapper], {
+            opacity: 0
+        })
+        gsap.to([scene4Wrapper], {
+            opacity: 1
+        })
+        gsap.to([astronaut, umbilicalCord], {
+            translateY: -35,
+            repeat: -1,
+            yoyo: true,
+            duration: 4,
+            ease: "sine.inOut"
+        })
+        let scene4Start = gsap.timeline({duration: 1})
+        scene4Start.to(scene4Items, {
+            opacity:1
+        })
+        writeText("TO THE MOON!!")
     }
 
 
