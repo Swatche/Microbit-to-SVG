@@ -8,6 +8,9 @@
     <!-- Who are you? -->
     <meta name="author" content="Sammy Mak" />
     <!-- Attach Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css"/>
 
     <!-- Name Your Page -->
@@ -29,23 +32,30 @@
       </section>
 
       <section id="UIContainer">
-        <!-- ! 1.1 Delete the onClick function -->
+      <!-- ! 1.1 Delete the onClick function -->
         <button id="searchButton">Search Device</button>
 
+        <fieldset id="buttonContainer">
+          <h3>Buttons:</h3>
+          <ul>
+            <li>A: <span id="buttonA" class="value"></span></li>
+            <li>B: <span id="buttonB" class="value"></span></li>
+          </ul>
+        </fieldset>
+
+        <fieldset id="textfield">
+          <h3>Micro:bit Console</h3>
+          <ul>
+            <li id="myText" class="value"></li>
+          </ul>
+        </fieldset>
+
         <fieldset id="accel">
-          <h2>Accelerometer:</h2>
+          <h3>Accelerometer:</h3>
           <ul>
             <li>X: <span id="accX" class="value"></span></li>
             <li>Y: <span id="accY" class="value"></span></li>
             <li>Z: <span id="accZ" class="value"></span></li>
-          </ul>
-        </fieldset>
-
-        <fieldset id="buttonContainer">
-          <h2>Buttons:</h2>
-          <ul class="property">
-            <li>Button A: <span id="buttonA" class="value"></span></li>
-            <li>Button B: <span id="buttonB" class="value"></span></li>
           </ul>
         </fieldset>
     

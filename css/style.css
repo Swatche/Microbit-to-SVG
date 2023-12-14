@@ -49,21 +49,26 @@ svg {
   /* border: 1px solid blue; */
 }
 
+#UIContainer h3{
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  font-family: 'Silkscreen', sans-serif;
+}
+
 #searchButton {
   height: 4rem;
-  border: 2px solid black;
   padding: 1rem;
-  margin-top: 0.5rem;
-  background-color: black;
-  border: 1px solid white;
+  margin-top: 2rem;
+  /* border: 1px solid white; */
+  background-color: white;
+  color: black;
 }
 
 #searchButton:hover{
   /* font-weight: bold; */
-  border: 3px ridge white;
-}
-
-#searchButton:hover {
+  /* border: 3px ridge white; */
+  background-color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -80,9 +85,53 @@ ul {
   list-style: none;
 }
 
-/* #accel {
-  display: none;
+#accel ul{
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(30, 30, 30);
+  padding: 1.35rem;
+}
+
+#accel ul span{
+  color: rgb(15, 212, 15);
+  /* font-size: 1.1rem; */
+}
+
+#accel ul li{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#accel ul li span{
+  margin: 1rem 0;
+}
+
+#buttonContainer ul{
+  display: flex;
+  font-weight: bold;
+}
+
+#buttonContainer li{
+  /* border: 1px solid white; */
+  background-color: white;
+  color: black;
+  padding: 1.35rem;
+  display: flex;
+}
+
+.value{
+  color: black;
+}
+
+/* #buttonContainer li:hover{
+  background-color: black;
+  color: white;
+  cursor: pointer;
 } */
+
+#buttonContainer li+li{
+  margin-left: 30px;
+}
 
 .block{
   display: block;
