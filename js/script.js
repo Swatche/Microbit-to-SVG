@@ -1,6 +1,7 @@
 // ******************  3.0 ADD WINDOW ONLOAD TO ALLOW EMBEDDED SVG TO TARGET PROPERLY
 window.onload = function() {
     let accelField = document.getElementById("accel")
+    let textField = document.getElementById("myText")
     //! scene1
     let scene1 = document.getElementById('scene1SVG').contentDocument
 
@@ -260,7 +261,7 @@ window.onload = function() {
         y: 150,
     })
     
-    gsap.set([scene4Wrapper, scene2Wrapper, scene3Wrapper, accelField], {
+    gsap.set([scene4Wrapper, scene2Wrapper, scene3Wrapper], {
         opacity: 0
     })
     // gsap.set([scene1Wrapper, scene2Wrapper, scene4Wrapper, accelField], {
@@ -296,6 +297,7 @@ window.onload = function() {
                 break;
             case 3:
                 scene3Do();
+                writeText("")
                 break;
             case 4:
                 scene4Do();
@@ -307,12 +309,12 @@ window.onload = function() {
 
     // ** 2.2 Create a function to keep the current count of button presses
     function currentButtonBCount() {
+        if(buttonBCurrentCount === 36){
+            buttonBCurrentCount = 0
+        }
+
         buttonBCurrentCount++;
         console.log(buttonBCurrentCount);
-
-        if (buttonBCurrentCount === 36) {
-            return;
-        }
 
         // ** 2.4 Reset count if it exceeds a maximum
         switch(buttonBCurrentCount) {
@@ -392,6 +394,7 @@ window.onload = function() {
 
     function writeText (text){
         microBit.writeMatrixText(text);
+        textField.innerText = text
     }
 
     function scene1Do(){

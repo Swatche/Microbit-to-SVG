@@ -33,7 +33,10 @@
 
       <section id="UIContainer">
       <!-- ! 1.1 Delete the onClick function -->
-        <button id="searchButton">Search Device</button>
+        <fieldset>
+          <h3>Connect:</h3>
+          <button id="searchButton">Search Device</button>
+        </fieldset>
 
         <fieldset id="buttonContainer">
           <h3>Buttons:</h3>
@@ -43,19 +46,19 @@
           </ul>
         </fieldset>
 
-        <fieldset id="textfield">
-          <h3>Micro:bit Console</h3>
-          <ul>
-            <li id="myText" class="value"></li>
-          </ul>
-        </fieldset>
-
         <fieldset id="accel">
           <h3>Accelerometer:</h3>
           <ul>
             <li>X: <span id="accX" class="value"></span></li>
             <li>Y: <span id="accY" class="value"></span></li>
             <li>Z: <span id="accZ" class="value"></span></li>
+          </ul>
+        </fieldset>
+
+        <fieldset id="textfield">
+          <h3>Micro:bit Console</h3>
+          <ul>
+            <li><span id="myText" class="value"></span></li>
           </ul>
         </fieldset>
     
