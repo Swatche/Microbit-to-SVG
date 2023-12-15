@@ -4,6 +4,7 @@ window.onload = function() {
     let textField = document.getElementById("myText")
     //! scene1
     let scene1 = document.getElementById('scene1SVG').contentDocument
+    let scene1Container = document.getElementById('scene1SVG')
 
     let scene1Wrapper = scene1.getElementById("scene1Wrapper")
     let stickNeutral = scene1.getElementById('stick-neutral')
@@ -17,6 +18,7 @@ window.onload = function() {
 
     //! scene2
     let scene2 = document.getElementById('scene2SVG').contentDocument
+    let scene2Container = document.getElementById('scene2SVG')
 
     let scene2Wrapper = scene2.getElementById("scene2Wrapper")
     let cloud1 = scene2.getElementById("cloud-1")
@@ -35,8 +37,10 @@ window.onload = function() {
 
     //! scene3
     let scene3 = document.getElementById('scene3SVG').contentDocument
+    let scene3Container = document.getElementById('scene3SVG')
 
     let scene3Wrapper = scene3.getElementById("scene3Wrapper")
+    let scene3Text = scene3.getElementById('tilt-to-explore')
     let scene3Bg = scene3.getElementById("scene3Bg")
     let scene3Rocket = scene3.getElementById("scene3-rocket")
     let scene3Moon = scene3.getElementById("scene3-moon")
@@ -76,8 +80,10 @@ window.onload = function() {
 
     //! scene 4
     let scene4 = document.getElementById('scene4SVG').contentDocument
+    let scene4Container = document.getElementById('scene4SVG')
 
     let scene4Wrapper = scene4.getElementById("scene4Wrapper")
+    let scene4Bg = scene4.getElementById("scene4-bg")
     let moonSurface = scene4.getElementById("moon-surface")
     let scene4Rocket = scene4.getElementById("scene4-rocket")
     let astronaut = scene4.getElementById("astronaut")
@@ -94,10 +100,24 @@ window.onload = function() {
     let star4_9 = scene4.getElementById("star4-9")
 
     //! scene item containers
-    let scene1Items = [stickNeutral, scene1AToContinue, scene1moon, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
-    let scene2Items = [cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
-    let scene3Items = [scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
-    let scene4Items = [moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
+    let scene1Items = [scene1AtoContinue1, scene1moon, scene1WeightOn, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
+    let scene2Items = [scene2Bg, rocketFloor, rocketStand, scene2AToContinue, scene2Text, cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
+    let scene3Items = [scene3Text, scene3Bg, scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
+    let scene4Items = [scene4Bg, moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
+
+    let currentScene = 1
+    
+    gsap.set([scene1Items, scene4Items], {
+        opacity: 0
+    })
+
+    // gsap.set([starT1, starT2, starT3], {
+    //     display: "none"
+    // })
+
+    gsap.set([scene2Container, scene3Container, scene4Container], {
+        opacity: 0
+    })
 
     // *** 1.1 Delcare new micro:bit object ***
     let microBit = new uBit();
@@ -250,27 +270,6 @@ window.onload = function() {
         return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
     }
 
-    //!!!!!!!! DO THE SCENE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    gsap.set(scene1moon,{
-        y: -550
-    })
-    gsap.set(scene1WeightOn,{
-        x: 770
-    })
-    gsap.set([astronaut, umbilicalCord], {
-        y: 150,
-    })
-    
-    gsap.set([scene4Wrapper, scene2Wrapper, scene3Wrapper], {
-        opacity: 0
-    })
-    // gsap.set([scene1Wrapper, scene2Wrapper, scene4Wrapper, accelField], {
-    //     opacity: 0
-    // })
-    // gsap.set([scene3Items], {
-    //     opacity: 1
-    // })
-
     // ** 1.5 Only calls function once when Button A is pressed. 
     microBit.setButtonACallback(function() {
         console.log("Button A is Pressed!");
@@ -285,22 +284,40 @@ window.onload = function() {
 
     function currentButtonACount(){
         buttonACurrentCount++
-        console.log(buttonACurrentCount);
+        // console.log(buttonACurrentCount);
+
+        if(buttonACurrentCount === 6){
+            buttonACurrentCount = 0
+        }
         
         switch(buttonACurrentCount){
+            case 0:
+                gsap.to([scene1Container, scene1AToContinue, stickNeutral], {
+                    opacity: 1
+                })
+                writeText("")
+                break;
             case 1:
+                changeScene(1)
                 scene1Do();
-                // accelField.classList.add("block")
                 break;
             case 2:
+                changeScene(2)
                 scene2Do();
                 break;
             case 3:
+                changeScene(3)
                 scene3Do();
                 writeText("")
                 break;
             case 4:
+                changeScene(4)
                 scene4Do();
+                break;
+            case 5:
+                buttonBCurrentCount = 0
+                console.log(buttonBCurrentCount)
+                reset();
                 break;
             default:
                 break;
@@ -309,12 +326,12 @@ window.onload = function() {
 
     // ** 2.2 Create a function to keep the current count of button presses
     function currentButtonBCount() {
-        if(buttonBCurrentCount === 36){
-            buttonBCurrentCount = 0
+        if (currentScene != 2 || buttonBCurrentCount === 36){
+            console.log("B disabled")
+        } else {
+            buttonBCurrentCount++;
+            console.log(buttonBCurrentCount);
         }
-
-        buttonBCurrentCount++;
-        console.log(buttonBCurrentCount);
 
         // ** 2.4 Reset count if it exceeds a maximum
         switch(buttonBCurrentCount) {
@@ -397,7 +414,20 @@ window.onload = function() {
         textField.innerText = text
     }
 
+    function changeScene(num){
+        currentScene = num
+        console.log(`currentScene: ${currentScene}`)
+    }
+
     function scene1Do(){
+        gsap.set(scene1moon,{
+            y: -550,
+            opacity: 1
+        })
+        gsap.set(scene1WeightOn,{
+            x: 770, 
+            opacity: 1
+        })
         let scene1Start = gsap.timeline({duration: 1})
         scene1Start.to(scene1AToContinue, {
             opacity: 0,
@@ -431,24 +461,29 @@ window.onload = function() {
         scene1Start.to(scene1Weightless, {
             opacity: 1,
             duration: 1,
-            delay: 2.4,
+            delay: 2.3,
             scale: 1.1,
             yoyo: true,
             repeat: -1
         })
         scene1Start.to(scene1AtoContinue1, {
-            opacity: 1
+            opacity: 1,
+            delay: 2.4
         })
     }
 
     function scene2Do(){
         let scene2Start = gsap.timeline({duration: 1})
-        scene2Start.to(scene1Wrapper, {
+        // scene2Start.to(scene1Wrapper, {
+        //     opacity: 0,
+        // })
+        scene2Start.to(scene1Container, {
             opacity: 0,
+            // display: "none"
         })
-        scene2Start.to(scene2Wrapper, {
+        scene2Start.to([scene2Container, scene2Bg], {
             opacity: 1,
-            delay: 2,
+            delay: 1.5,
             duration: 2
         })
         scene2Start.to(rocketFloor, {
@@ -468,7 +503,7 @@ window.onload = function() {
             duration: 1
         })
         scene2Start.to(scene2Text, {
-            opacity: 1
+            opacity: 1,
         })
     }
 
@@ -617,10 +652,11 @@ window.onload = function() {
             duration: 2
         })
         let scene3Start = gsap.timeline({duration: 1})
-        scene3Start.to(scene2Wrapper, {
+        scene3Start.to(scene2Container, {
             opacity: 0,
+            // display: "none"
         })
-        scene3Start.to([scene3Wrapper, accelField], {
+        scene3Start.to([scene3Container, accelField, scene3Bg], {
             opacity: 1,
             delay: 1.3,
             duration: 2
@@ -645,17 +681,23 @@ window.onload = function() {
             opacity:1,
             duration:0.8
         })
-        scene3Start.to(scene3Rocket, {
+        scene3Start.to([scene3Rocket, scene3Text], {
             opacity: 1,
             duration: 0.8
         })
     }
 
     function scene4Do(){
-        gsap.to([scene1Wrapper, scene2Wrapper, scene2Bg, scene3Wrapper], {
-            opacity: 0
+        gsap.set([astronaut, umbilicalCord], {
+            y: 150,
         })
-        gsap.to([scene4Wrapper], {
+        // gsap.to([scene1Wrapper, scene2Wrapper, scene2Bg, scene3Wrapper], {
+        //     opacity: 0
+        // })
+        gsap.to([scene3Container], {
+            opacity:0
+        })
+        gsap.to([scene4Container], {
             opacity: 1
         })
         gsap.to([astronaut, umbilicalCord], {
@@ -672,6 +714,40 @@ window.onload = function() {
         writeText("TO THE MOON!!")
     }
 
+    function reset(){
+        gsap.to([scene4Container], {
+            opacity: 0
+        })
+        scene1Items.forEach(item=>{
+            gsap.killTweensOf(item)
+            gsap.to(item, {
+                opacity: 0
+            })
+            // item.restart()
+        })
+        scene2Items.forEach(item=>{
+            gsap.killTweensOf(item)
+            gsap.to(item, {
+                opacity: 0
+            })
+            // item.restart()
+        })
+        scene3Items.forEach(item=>{
+            gsap.killTweensOf(item)
+            gsap.to(item, {
+                opacity: 0
+            })
+            // item.restart()
+        })
+        scene4Items.forEach(item=>{
+            gsap.killTweensOf(item)
+            gsap.to(item, {
+                opacity: 0
+            })
+            // item.restart()
+        })
+        // gsap.killTweensOf(scene3Wrapper)
+    }
 
 
 

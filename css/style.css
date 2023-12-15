@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+#scene1SVG{
+  opacity: 1;
+}
+
+/* #scene2SVG, #scene3SVG, #scene4SVG{
+  opacity: 0
+} */
+
 body {
   /* font-family: "Roboto", sans-serif; */
   font-family: 'Silkscreen', sans-serif;
