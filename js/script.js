@@ -104,16 +104,10 @@ window.onload = function() {
     let scene2Items = [scene2Bg, rocketFloor, rocketStand, scene2AToContinue, scene2Text, cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
     let scene3Items = [scene3Text, scene3Bg, scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
     let scene4Items = [scene4Bg, moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
-
-    let currentScene = 1
     
-    gsap.set([scene1Items, scene4Items], {
+    gsap.set([scene1Items, scene4Items, accelField], {
         opacity: 0
     })
-
-    // gsap.set([starT1, starT2, starT3], {
-    //     display: "none"
-    // })
 
     gsap.set([scene2Container, scene3Container, scene4Container], {
         opacity: 0
@@ -165,6 +159,7 @@ window.onload = function() {
     // ** 2.1 Declare a variable to hold the count
     let buttonACurrentCount = 0
     let buttonBCurrentCount = 0;
+    let currentScene = 1
 
     // **************** 4.0 Declare Accelerometer values
     let ax;
@@ -219,31 +214,38 @@ window.onload = function() {
         currentS1Collide = intersect (rocketCollider, starT1Collide)
         currentS2Collide = intersect (rocketCollider, starT2Collide)
         currentS3Collide = intersect (rocketCollider, starT3Collide)
-        
-        if (currentS1Collide === true && prevS1Collide === false){
-            console.log(starCount)
-            starCount++
-            gsap.to(starT1, {
-                autoAlpha: 0,
-                // opacity: 0
-            })
+
+        if(starCount == 1 || starCount == 2 || starCount == 0){
+            if (currentScene === 3 && currentS1Collide === true && prevS1Collide === false){
+                console.log(starCount)
+                starCount++
+                gsap.to(starT1, {
+                    autoAlpha: 0
+                })
+            }
+            if (currentScene === 3 && currentS2Collide === true && prevS2Collide === false){
+                console.log(starCount)
+                starCount++
+                gsap.to(starT2, {
+                    autoAlpha: 0
+                })
+            }
+            if (currentScene === 3 && currentS3Collide === true && prevS3Collide === false){
+                console.log(starCount)
+                starCount++
+                gsap.to(starT3, {
+                    autoAlpha: 0
+                })
+            }
+            
+            prevS1Collide = currentS1Collide
+            prevS2Collide = currentS2Collide
+            prevS3Collide = currentS3Collide
+        } else {
+            console.log("star disabled")
         }
-        if (currentS2Collide === true && prevS2Collide === false){
-            console.log(starCount)
-            starCount++
-            gsap.to(starT2, {
-                // autoAlpha: 0,
-                display: "none"
-            })
-        }
-        if (currentS3Collide === true && prevS3Collide === false){
-            console.log(starCount)
-            starCount++
-            gsap.to(starT3, {
-                display: "none"
-            })
-        }
-        if(starCount === 3){
+
+        if(currentScene === 3 && starCount === 3){
             gsap.to(scene3Moon, {
                 opacity: 1
             })
@@ -251,12 +253,8 @@ window.onload = function() {
         if (currentMoonCollide === true && prevMoonCollide === false){
             scene4Do()
         }
-        
-        prevS1Collide = currentS1Collide
-        prevS2Collide = currentS2Collide
-        prevS3Collide = currentS3Collide
-        prevMoonCollide = currentMoonCollide
 
+        prevMoonCollide = currentMoonCollide
     });
 
     // ! create scaling function: takes input variable, maps the min and max input values to a new range
