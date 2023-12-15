@@ -2,6 +2,7 @@
 window.onload = function() {
     let accelField = document.getElementById("accel")
     let textField = document.getElementById("myText")
+    let resetField = document.getElementById("resetMessage")
     //! scene1
     let scene1 = document.getElementById('scene1SVG').contentDocument
     let scene1Container = document.getElementById('scene1SVG')
@@ -40,7 +41,8 @@ window.onload = function() {
     let scene3Container = document.getElementById('scene3SVG')
 
     let scene3Wrapper = scene3.getElementById("scene3Wrapper")
-    let scene3Text = scene3.getElementById('tilt-to-explore')
+    let scene3Text = scene3.getElementById('collect-stars')
+    let scene3MoonText = scene3.getElementById('grab-moon')
     let scene3Bg = scene3.getElementById("scene3Bg")
     let scene3Rocket = scene3.getElementById("scene3-rocket")
     let scene3Moon = scene3.getElementById("scene3-moon")
@@ -98,12 +100,13 @@ window.onload = function() {
     let star4_7 = scene4.getElementById("star4-7")
     let star4_8 = scene4.getElementById("star4-8")
     let star4_9 = scene4.getElementById("star4-9")
+    let scene4Text = scene4.getElementById("a-to-reset")
 
     //! scene item containers
     let scene1Items = [scene1AtoContinue1, scene1moon, scene1WeightOn, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
     let scene2Items = [scene2Bg, rocketFloor, rocketStand, scene2AToContinue, scene2Text, cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
-    let scene3Items = [scene3Moon, scene3Text, scene3Bg, scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
-    let scene4Items = [scene4Bg, moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
+    let scene3Items = [scene3MoonText, scene3Moon, scene3Text, scene3Bg, scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
+    let scene4Items = [scene4Text, scene4Bg, moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
     
     gsap.set([scene1Items, scene4Items, accelField], {
         opacity: 0
@@ -259,8 +262,11 @@ window.onload = function() {
         }
 
         if(currentScene === 3 && starCount === 3){
-            gsap.to(scene3Moon, {
+            gsap.to([scene3Moon, scene3MoonText], {
                 opacity: 1
+            })
+            gsap.to(scene3Text, {
+                opacity: 0
             })
         }
         if (currentMoonCollide === true && prevMoonCollide === false){
@@ -297,12 +303,13 @@ window.onload = function() {
         buttonACurrentCount++
         // console.log(buttonACurrentCount);
 
-        if(buttonACurrentCount === 6){
+        if(buttonACurrentCount === 5){
             buttonACurrentCount = 0
         }
         
         switch(buttonACurrentCount){
             case 0:
+                resetField.textContent = ""
                 gsap.to([scene1Container, scene1AToContinue, stickNeutral], {
                     opacity: 1
                 })
@@ -321,11 +328,13 @@ window.onload = function() {
                 scene3Do();
                 writeText("")
                 break;
+            // case 4:
+            //     changeScene(4)
+            //     scene4Do();
+            //     break;
             case 4:
-                changeScene(4)
-                scene4Do();
-                break;
-            case 5:
+                resetField.textContent = "Press A to play again!"
+                starCount = 0
                 buttonBCurrentCount = 0
                 S1Active = true
                 S2Active = true
@@ -398,7 +407,7 @@ window.onload = function() {
                 gsap.to([cloud1, cloud2, cloud3, cloud4, cloud5, scene2Text], {
                     opacity: 0
                 })
-                writeText("BLAST OFF")
+                writeText("BLAST OFF!")
                 let rocketLaunch = gsap.timeline({duration: 1})
                 rocketLaunch.to(scene2Fire, {
                     opacity: 1,
@@ -493,7 +502,6 @@ window.onload = function() {
         // })
         scene2Start.to(scene1Container, {
             opacity: 0,
-            // display: "none"
         })
         scene2Start.to([scene2Container, scene2Bg], {
             opacity: 1,
@@ -668,7 +676,6 @@ window.onload = function() {
         let scene3Start = gsap.timeline({duration: 1})
         scene3Start.to(scene2Container, {
             opacity: 0,
-            // display: "none"
         })
         scene3Start.to([scene3Container, accelField, scene3Bg], {
             opacity: 1,
@@ -702,6 +709,7 @@ window.onload = function() {
     }
 
     function scene4Do(){
+        changeScene(4)
         gsap.set([astronaut, umbilicalCord], {
             y: 150,
         })
@@ -724,6 +732,10 @@ window.onload = function() {
         let scene4Start = gsap.timeline({duration: 1})
         scene4Start.to(scene4Items, {
             opacity:1
+        })
+        scene4Start.to(scene4Text, {
+            opacity: 1,
+            delay: 1.6
         })
         writeText("TO THE MOON!!")
     }
