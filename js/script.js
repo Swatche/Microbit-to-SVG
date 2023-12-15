@@ -102,7 +102,7 @@ window.onload = function() {
     //! scene item containers
     let scene1Items = [scene1AtoContinue1, scene1moon, scene1WeightOn, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
     let scene2Items = [scene2Bg, rocketFloor, rocketStand, scene2AToContinue, scene2Text, cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
-    let scene3Items = [scene3Text, scene3Bg, scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
+    let scene3Items = [scene3Moon, scene3Text, scene3Bg, scene3Rocket, starg1, starg2, starg3, starg4, starg5, redPlanet, bluePlanet, yellowPlanet, starT1, starT2, starT3]
     let scene4Items = [scene4Bg, moonSurface, scene4Rocket, astronaut, umbilicalCord, earth, star4_1, star4_2, star4_3, star4_4, star4_5, star4_6, star4_7, star4_8, star4_9]
     
     gsap.set([scene1Items, scene4Items, accelField], {
@@ -124,6 +124,12 @@ window.onload = function() {
     let currentS2Collide = false
     let currentS3Collide = false
     let currentMoonCollide = false
+    let S1Active = true
+    let S2Active = true
+    let S3Active = true
+    console.log(`S1 Active: ${S1Active}`)
+    console.log(`S2 Active: ${S2Active}`)
+    console.log(`S3 Active: ${S3Active}`)
     let prevS1Collide = currentS1Collide 
     let prevS2Collide = currentS2Collide 
     let prevS3Collide = currentS3Collide 
@@ -215,23 +221,30 @@ window.onload = function() {
         currentS2Collide = intersect (rocketCollider, starT2Collide)
         currentS3Collide = intersect (rocketCollider, starT3Collide)
 
-        if(starCount == 1 || starCount == 2 || starCount == 0){
-            if (currentScene === 3 && currentS1Collide === true && prevS1Collide === false){
+        // if(starCount == 1 || starCount == 2 || starCount == 0){
+        if(starCount<3 && currentScene === 3){
+            if (S1Active === true && currentS1Collide === true && prevS1Collide === false){
                 console.log(starCount)
+                S1Active = false
+                console.log(`S1 Active: ${S1Active}`)
                 starCount++
                 gsap.to(starT1, {
                     autoAlpha: 0
                 })
             }
-            if (currentScene === 3 && currentS2Collide === true && prevS2Collide === false){
+            if (S2Active === true && currentS2Collide === true && prevS2Collide === false){
                 console.log(starCount)
+                S2Active = false
+                console.log(`S2 Active: ${S2Active}`)
                 starCount++
                 gsap.to(starT2, {
                     autoAlpha: 0
                 })
             }
-            if (currentScene === 3 && currentS3Collide === true && prevS3Collide === false){
+            if (S3Active === true && currentS3Collide === true && prevS3Collide === false){
                 console.log(starCount)
+                S3Active = false
+                console.log(`S3 Active: ${S3Active}`)
                 starCount++
                 gsap.to(starT3, {
                     autoAlpha: 0
@@ -314,6 +327,9 @@ window.onload = function() {
                 break;
             case 5:
                 buttonBCurrentCount = 0
+                S1Active = true
+                S2Active = true
+                S3Active = true
                 console.log(buttonBCurrentCount)
                 reset();
                 break;
@@ -692,7 +708,7 @@ window.onload = function() {
         // gsap.to([scene1Wrapper, scene2Wrapper, scene2Bg, scene3Wrapper], {
         //     opacity: 0
         // })
-        gsap.to([scene3Container], {
+        gsap.to([scene3Container, scene2Container, scene1Container], {
             opacity:0
         })
         gsap.to([scene4Container], {
@@ -721,30 +737,25 @@ window.onload = function() {
             gsap.to(item, {
                 opacity: 0
             })
-            // item.restart()
         })
         scene2Items.forEach(item=>{
             gsap.killTweensOf(item)
             gsap.to(item, {
                 opacity: 0
             })
-            // item.restart()
         })
         scene3Items.forEach(item=>{
             gsap.killTweensOf(item)
             gsap.to(item, {
                 opacity: 0
             })
-            // item.restart()
         })
         scene4Items.forEach(item=>{
             gsap.killTweensOf(item)
             gsap.to(item, {
                 opacity: 0
             })
-            // item.restart()
         })
-        // gsap.killTweensOf(scene3Wrapper)
     }
 
 
