@@ -102,6 +102,11 @@ window.onload = function() {
     let star4_9 = scene4.getElementById("star4-9")
     let scene4Text = scene4.getElementById("a-to-reset")
 
+    //* scene4 star containers
+    let star4g1 = [star4_2, star4_8, star4_6]
+    let star4g2 = [star4_3, star4_5, star4_1]
+    let star4g3 = [star4_7, star4_9, star4_4]
+
     //! scene item containers
     let scene1Items = [scene1AtoContinue1, scene1moon, scene1WeightOn, stickSquat, scene1WeightOn, scene1Want, scene1Weightless]
     let scene2Items = [scene2Bg, rocketFloor, rocketStand, scene2AToContinue, scene2Text, cloud1, cloud2, cloud3, cloud4, cloud5, scene2Bg, scene2Rocket, scene2Fire, rocketRod]
@@ -161,7 +166,7 @@ window.onload = function() {
 
     gsap.set([scene1Weightless, scene2Fire, scene2Rocket, 
             scene3Rocket, moonCollider, rocketCollider, scene3Items,
-            scene3Moon], {
+            scene3Moon, scene4Items], {
         transformOrigin: "center center"
     })
 
@@ -190,6 +195,9 @@ window.onload = function() {
     // *** 1.3 Check if micro:bit successfully connected ***
     microBit.onConnect(function() {
         console.log("I am connected to the universe! :D");
+        gsap.to(searchBtn, {
+            color: "#00CE00"
+        })
     });
 
     // ** 1.4 GetButton data that updates with every frame
@@ -232,7 +240,7 @@ window.onload = function() {
                 console.log(`S1 Active: ${S1Active}`)
                 starCount++
                 gsap.to(starT1, {
-                    autoAlpha: 0
+                    opacity: 0
                 })
             }
             if (S2Active === true && currentS2Collide === true && prevS2Collide === false){
@@ -241,7 +249,7 @@ window.onload = function() {
                 console.log(`S2 Active: ${S2Active}`)
                 starCount++
                 gsap.to(starT2, {
-                    autoAlpha: 0
+                    opacity: 0
                 })
             }
             if (S3Active === true && currentS3Collide === true && prevS3Collide === false){
@@ -250,7 +258,7 @@ window.onload = function() {
                 console.log(`S3 Active: ${S3Active}`)
                 starCount++
                 gsap.to(starT3, {
-                    autoAlpha: 0
+                    opacity: 0
                 })
             }
             
@@ -478,28 +486,25 @@ window.onload = function() {
         })
         scene1Start.to(scene1Want, {
             opacity: 1,
-            duration: 1,
+            duration: 0.9,
             delay: 2.2
         })
         scene1Start.to(scene1Weightless, {
             opacity: 1,
-            duration: 1,
-            delay: 2.3,
+            duration: 0.9,
+            delay: 2.25,
             scale: 1.1,
             yoyo: true,
             repeat: -1
         })
         scene1Start.to(scene1AtoContinue1, {
-            opacity: 1,
-            delay: 2.4
+            duration: 0.9,
+            delay: 2.3
         })
     }
 
     function scene2Do(){
         let scene2Start = gsap.timeline({duration: 1})
-        // scene2Start.to(scene1Wrapper, {
-        //     opacity: 0,
-        // })
         scene2Start.to(scene1Container, {
             opacity: 0,
         })
@@ -729,19 +734,70 @@ window.onload = function() {
             duration: 4,
             ease: "sine.inOut"
         })
+        gsap.to(earth, {
+            rotate: 360,
+            repeat: -1,
+            ease: "linear",
+            duration: 8
+        })
+        star4g1.forEach(star=>{
+            gsap.to(star, {
+                scale: 1.2,
+                rotate: 180,
+                yoyo: true,
+                repeat: -1,
+                duration: 1.5
+            })
+        })
+        star4g2.forEach(star=>{
+            gsap.to(star, {
+                scale: 0.85,
+                yoyo: true,
+                repeat: -1,
+                duration: 2
+            })
+        })
+        star4g3.forEach(star=>{
+            gsap.to(star, {
+                scale: 2,
+                rotate: 360,
+                repeat: -1,
+                ease: "linear",
+                duration: 5,
+                yoyo: "true"
+            })
+        })
         let scene4Start = gsap.timeline({duration: 1})
-        scene4Start.to(scene4Items, {
+        scene4Start.to(scene4Bg, {
+            opacity:1
+        })
+        scene4Start.to(star4g1, {
+            opacity:1
+        })
+        scene4Start.to([star4g2, earth], {
+            opacity:1,
+            duration: 1.2
+        })
+        scene4Start.to([star4g3, moonSurface], {
+            opacity:1,
+            duration: 1.2
+        })
+        scene4Start.to(scene4Rocket, {
+            opacity:1,
+            duration: 1.2
+        })
+        scene4Start.to([astronaut, umbilicalCord], {
             opacity:1
         })
         scene4Start.to(scene4Text, {
             opacity: 1,
-            delay: 1.6
+            delay: 2
         })
         writeText("TO THE MOON!!")
     }
 
     function reset(){
-        gsap.to([scene4Container], {
+        gsap.to([scene4Container, accelField], {
             opacity: 0
         })
         scene1Items.forEach(item=>{

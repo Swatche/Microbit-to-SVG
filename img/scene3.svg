@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="scene3SVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
   <g id="scene3Wrapper">
-    <rect id="scene3Bg" x="1.14" y=".38" width="1920" height="1080" stroke="#000" stroke-miterlimit="10" stroke-width=".75"/>
+    <rect id="scene3Bg" x="1.14" y=".38" width="1922.84" height="1080" stroke="#000" stroke-miterlimit="10" stroke-width=".75"/>
     <polygon id="star-15" points="667.17 529.78 651.3 521.11 634.2 527.72 638.65 511.73 626.24 499.44 644.86 498.23 654.28 484.02 661.34 499.26 679.58 502.77 665.32 513.4 667.17 529.78" fill="#fff" opacity="0" stroke="#fff" stroke-miterlimit="10"/>
     <polygon id="star-14" points="775.66 768.25 791.84 797.16 828.02 801.79 801.84 824.3 808.02 856.07 775.66 841.07 743.3 856.07 749.48 824.3 723.3 801.79 759.48 797.16 775.66 768.25" fill="#fff" opacity="0" stroke="#fff" stroke-miterlimit="10"/>
     <polygon id="star-13" points="1148.81 227.92 1109.66 211.2 1071.85 230.16 1077.78 192.16 1045.64 166.31 1088.46 159.55 1106.42 124.61 1126.95 158.43 1170.18 162.69 1140.05 190.35 1148.81 227.92" fill="#fff" opacity="0" stroke="#fff" stroke-miterlimit="10"/>
