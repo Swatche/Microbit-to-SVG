@@ -199,6 +199,12 @@ window.onload = function() {
             color: "#00CE00"
         })
     });
+    microBit.onDisconnect(function(){
+        console.log("Disconnected");
+        gsap.to(searchBtn, {
+            color: "white"
+        })
+    })
 
     // ** 1.4 GetButton data that updates with every frame
     microBit.onBleNotify(function() {
@@ -487,19 +493,20 @@ window.onload = function() {
         scene1Start.to(scene1Want, {
             opacity: 1,
             duration: 0.9,
-            delay: 2.2
+            delay: 2.1
         })
         scene1Start.to(scene1Weightless, {
             opacity: 1,
             duration: 0.9,
-            delay: 2.25,
+            delay: 2.2,
             scale: 1.1,
             yoyo: true,
             repeat: -1
         })
         scene1Start.to(scene1AtoContinue1, {
             duration: 0.9,
-            delay: 2.3
+            delay: 2.25,
+            opacity: 1
         })
     }
 
